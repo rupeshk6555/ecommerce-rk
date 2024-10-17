@@ -17,6 +17,7 @@ This is the backend API for the E-commerce application built using **Node.js**, 
   - Express.js
   - MongoDB (with Mongoose)
   - JWT (JSON Web Tokens) for authentication
+  - Nodemailer for verify email
   - Razorpay for payment processing
 
 ## Getting Started
@@ -42,11 +43,15 @@ Ensure you have the following installed on your machine:
 
 MONGODB_URI=mongodb://<username>:<password>@your_mongodb_host:port/database
 
-JWT_SECRET=your_jwt_secret
-
-RAZORPAY_KEY_ID=your_razorpay_key_id
-
-RAZORPAY_SECRET=your_razorpay_secret
+NODE_ENV=development
+PORT=3000
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=465
+EMAIL_USER=demo@gmail.com
+EMAIL_FROM=demo@gmail.com
+EMAIL_PASS=password
+RAZORPAY_KEY_ID=razorpay_key_id
+RAZORPAY_SECRET=razorpay_secret
 
 
 ```
@@ -60,17 +65,35 @@ npm run dev
 
 # API Endpoints
 
-## User Endpoints
-- **POST** `/api/users/register` - Register a new user
-- **POST** `/api/users/login` - Login an existing user
-- **GET** `/api/users/profile` - Get user profile details (requires authentication)
+## User Auth Endpoints
+- **POST** `/api/auth/register` - Register a new user
+- **GET** `/api/auth/verify-email/:token` - Verify email
+- **POST** `/api/auth/login` - Login an existing user
+- **POST** `/api/auth/forgot-password` - Forgot password
+- **POST** `/api/auth/reset-password/:token` - Reset password , token - you received on your email
+- **POST** `/api/auth/logout` - Logout user
+
+## user Profile Endpoints
+- **GET** `/api/auth/profile` - Get user profile details
+- **PUT** `/api/auth/profile` - Get user profile details
+ 
 
 ## Product Endpoints
-- **GET** `/api/products` - Get all products
-- **POST** `/api/products` - Add a new product (Admin only)
-- **PUT** `/api/products/:id` - Update a product (Admin only)
-- **DELETE** `/api/products/:id` - Delete a product (Admin only)
+- **GET** `/api/product` - Get all products
+- **POST** `/api/product` - Add a new product (Admin only)
+- **PUT** `/api/product/:id` - Update a product (Admin only)
+- **DELETE** `/api/product/:id` - Delete a product (Admin only)
+- **GET** `/api/product/:id` - Delete a product 
+- **POST** `/api/product/:id/review` - Delete a product
+  
+ ## Categories
+- **POST** `/api/categories` - create a new category
+- **GET** `/api/categories` - Get all products
+- **GET** `/api/categories/:id` - get a single category
+- **PUT** `/api/categories/:id` - update a category
+- **DELETE** `/api/categories/:id` - Get all products
 
+  
 ## Cart Endpoints
 - **POST** `/api/cart` - Add items to the cart
 - **GET** `/api/cart` - Get cart items
@@ -82,6 +105,8 @@ npm run dev
 - **GET** `/api/orders` - Get user orders
 - **GET** `/api/orders/:id` - Get order details by ID
 - **PUT** `/api/orders/:id/cancel` - Cancel an order
+
+  
 
 
 
